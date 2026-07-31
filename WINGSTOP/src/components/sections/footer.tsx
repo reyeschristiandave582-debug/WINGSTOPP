@@ -12,7 +12,7 @@ const Footer = () => {
             href="https://www.facebook.com/Wingstop/" 
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 rounded-full bg-[#000001] hover:bg-[#000001] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
+            className="w-7 h-7 rounded-full bg-[#00703a] hover:bg-[#00703a] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
             aria-label="Facebook"
           >
             <Facebook className="w-3.5 h-3.5 fill-current" />
@@ -21,7 +21,7 @@ const Footer = () => {
             href="https://www.instagram.com/wingstop/?hl=en"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 rounded-full bg-[#000001] hover:bg-[#000001] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
+            className="w-7 h-7 rounded-full bg-[#00703a] hover:bg-[#00703a] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
             aria-label="Instagram"
           >
             <Instagram className="w-3.5 h-3.5" />
@@ -30,7 +30,7 @@ const Footer = () => {
             href="https://www.linkedin.com/company/wingstop-restaurants-inc-" 
             target="_blank"
             rel="noopener noreferrer"
-            className="w-7 h-7 rounded-full bg-[#000001] hover:bg-[#000001] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
+            className="w-7 h-7 rounded-full bg-[#00703a] hover:bg-[#00703a`] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-3.5 h-3.5 fill-current" />
