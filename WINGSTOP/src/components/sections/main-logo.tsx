@@ -11,7 +11,7 @@ const MainLogo = () => {
       <img 
         src="https://i.imgur.com/uIrfy7H.png" 
         alt="Wingstop Logo" 
-        className="h-10 sm:h-15 w-20 object-contain transition-all duration-700 hover:brightness-120"
+        className="h-15 sm:h-15 w-20 object-contain transition-all duration-700 hover:brightness-120"
       />
     </div>
   );
