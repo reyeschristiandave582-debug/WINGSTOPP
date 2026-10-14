@@ -4,10 +4,10 @@ import React from 'react';
 import { Star } from 'lucide-react';
 
 /**
- * CTAButton Component
+ * CTAButton Component (Wingstop High-Converting Edition)
  * 
- * The primary call-to-action button with a high-impact design, 
- * including a shimmering hover effect, star icons, and a pulsing bottom glow.
+ * High-converting primary CTA button styled with Wingstop Green tones (#00703a), 
+ * vibrant gold star accents, subtle shine animation, pulse border, and a thumb-friendly full-width layout.
  */
 export default function CTAButton() {
   const url = "https://giftclick.org/aff_c?offer_id=893&aff_id=183864&source=Wingstop";
@@ -20,40 +20,41 @@ export default function CTAButton() {
   };
 
   return (
-    <div className="relative z-10 w-full max-w-md mx-auto px-4 flex flex-col items-center mt-6 mb-0">
+    <div className="relative z-10 w-full max-w-md mx-auto px-4 flex flex-col items-center mt-5 mb-2">
       <a 
         href={url}
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}
-        className="group relative w-[220px] sm:w-full h-[42px] sm:h-[54px] bg-[#00703a] hover:bg-[#00703a] text-white rounded-full flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(0,36,204,0.3)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] overflow-hidden no-underline"
+        className="group relative w-full h-[52px] sm:h-[58px] bg-[#00703a] hover:bg-[#005a2e] text-white rounded-full flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(0,112,58,0.4)] hover:shadow-[0_12px_30px_rgba(0,112,58,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] overflow-hidden no-underline border border-white/20 animate-pulse"
       >
-        {/* Shine Animation Overlay */}
+        {/* Continuous Shine Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -left-full group-hover:animate-shine pointer-events-none" />
 
-        <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3 relative z-10">
           <Star 
-            className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#ffffff] text-[#ffffff] animate-pulse" 
-            style={{ filter: 'none' }}
+            className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-[#FFC220] text-[#FFC220] flex-shrink-0" 
+            style={{ filter: 'drop-shadow(0 0 5px rgba(255,194,32,0.7))' }}
           />
 
-          <span className="text-[12px] sm:text-[14px] font-bold sm:font-white uppercase text-white tracking-[0.08em] flex items-center gap-1.5 sm:gap-2">
+          <span className="text-[14px] sm:text-[16px] font-black uppercase text-white tracking-[0.14em] drop-shadow-sm">
             START REVIEW
           </span>
 
           <Star 
-            className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-[#ffffff] text-[#ffffff] animate-pulse" 
-            style={{ filter: 'none' }}
+            className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-[#FFC220] text-[#FFC220] flex-shrink-0" 
+            style={{ filter: 'drop-shadow(0 0 5px rgba(255,194,32,0.7))' }}
           />
         </div>
       </a>
 
-      <p className="mt-3 text-[#182C54]/60 text-[10px] sm:text-[11px] font-bold tracking-tight text-center italic">
+      {/* Trust Subtext */}
+      <p className="mt-2.5 text-[#00703a]/80 text-[10px] sm:text-[11px] font-bold tracking-tight text-center italic">
         (Instant approval - No purchase required)
       </p>
 
-      {/* Subtle bottom glow */}
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-[#0024cc]/20 blur-2xl -z-10 rounded-full opacity-50 pointer-events-none" />
+      {/* Ambient Green Floor Glow */}
+      <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-4/5 h-6 bg-[#00703a]/25 blur-xl -z-10 rounded-full pointer-events-none" />
     </div>
   );
 }
