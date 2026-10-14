@@ -50,7 +50,7 @@ export default function CTAButton() {
 
       {/* Trust Subtext */}
       <p className="mt-2.5 text-[#00703a]/80 text-[10px] sm:text-[11px] font-bold tracking-tight text-center italic">
-        (Instant approval - No purchase required)
+        
       </p>
 
       {/* Ambient Green Floor Glow */}
