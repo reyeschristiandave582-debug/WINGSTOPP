@@ -4,7 +4,7 @@ import React from 'react';
 import { Star } from 'lucide-react';
 
 /**
- * CTAButton Component (Wingstop High-Converting Edition)
+ * CTAButton Component (Wingstop Edition)
  * 
  * High-converting primary CTA button styled with Wingstop Green tones (#00703a), 
  * vibrant gold star accents, subtle shine animation, pulse border, and a thumb-friendly full-width layout.
@@ -47,11 +47,6 @@ export default function CTAButton() {
           />
         </div>
       </a>
-
-      {/* Trust Subtext */}
-      <p className="mt-2.5 text-[#00703a]/80 text-[10px] sm:text-[11px] font-bold tracking-tight text-center italic">
-        
-      </p>
 
       {/* Ambient Green Floor Glow */}
       <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-4/5 h-6 bg-[#00703a]/25 blur-xl -z-10 rounded-full pointer-events-none" />
