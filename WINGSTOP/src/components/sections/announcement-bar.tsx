@@ -1,84 +1,166 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Clock, Sparkles } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Lock, Sparkles, Check, ShieldCheck, Clock } from "lucide-react";
 
-/**
- * AnnouncementBar Component
- * 
- * A sticky top bar with a countdown timer, sparkle icons, and a shimmering bottom border.
- * Built to pixel-perfect accuracy using Next.js 15, TypeScript, and Tailwind CSS.
- */
-const AnnouncementBar = () => {
-  // Initial time set to 5 minutes (300 seconds)
-  const [timeLeft, setTimeLeft] = useState(300);
+interface NotificationItem {
+  name: string;
+  action: string;
+}
 
+// Brand new unique batch of first names (distinct from Target list)
+const firstNames = [
+  "Liam", "Emma", "Noah", "Olivia", "Oliver", "Amelia", "James", "Mia", "Elijah", "Evelyn",
+  "William", "Harper", "Henry", "Camila", "Benjamin", "Gianna", "Lucas", "Abigail", "Theodore", "Ella",
+  "Mateo", "Emily", "Daniel", "Sofia", "Michael", "Avery", "Wyatt", "Scarlett", "Sebastian", "Eleanor",
+  "Carter", "Madison", "Jayden", "Layla", "Dylan", "Penelope", "Grayson", "Aria", "Levi", "Chloe",
+  "Isaac", "Grace", "Gabriel", "Ellie", "Julian", "Nora", "Ezra", "Hazel", "Anthony", "Zoey"
+];
+
+// Refreshed list of last initials
+const lastInitials = ["A.", "C.", "D.", "F.", "H.", "J.", "K.", "M.", "N.", "P.", "R.", "S.", "T.", "W.", "Y.", "Z."];
+
+const actions = [
+  "just claimed a $750 Wingstop coupon!",
+  "just claimed a $750 Wingstop gift card!",
+  "just unlocked reward eligibility!",
+  "just completed the review survey!",
+  "just verified eligibility!"
+];
+
+const notifications: NotificationItem[] = Array.from({ length: 100 }, (_, i) => ({
+  name: `${firstNames[i % firstNames.length]} ${lastInitials[(i * 5) % lastInitials.length]}`,
+  action: actions[i % actions.length]
+}));
+
+export default function AnnouncementBar() {
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [currentNotif, setCurrentNotif] = useState<NotificationItem | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(300);
+
+  // Mount check to eliminate Next.js server/client hydration errors
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    setMounted(true);
+  }, []);
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+  // 5-minute countdown timer hook
+  useEffect(() => {
+    if (!mounted || timeLeft <= 0) return;
+    const timerInterval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [timeLeft]);
+    return () => clearInterval(timerInterval);
+  }, [mounted, timeLeft]);
 
-  // Format time as M:SS
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
+  // Dynamic social proof toast loop
+  useEffect(() => {
+    if (!mounted) return;
+
+    const showRandomNotif = () => {
+      const randomIndex = Math.floor(Math.random() * notifications.length);
+      setCurrentNotif(notifications[randomIndex]);
+      setIsVisible(true);
+
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 3500);
+    };
+
+    const initialTimer = setTimeout(() => {
+      showRandomNotif();
+    }, 1500);
+
+    const interval = setInterval(() => {
+      showRandomNotif();
+    }, 7000);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, [mounted]);
+
   return (
-    <div className="sticky top-0 z-50 w-full bg-[#00703a] border-b border-[#00703a]/30 py-1.5 px-4 shadow-[0_4px_20px_rgba(0,0,0,0.3)] backdrop-blur-md">
-      {/* Sparkle Icons Overlay */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-        <Sparkles 
-          className="absolute left-[10%] top-1/2 -translate-y-1/2 w-4 h-4 text-white animate-pulse" 
-          strokeWidth={1.5}
-        />
-        <Sparkles 
-          className="absolute right-[10%] top-1/2 -translate-y-1/2 w-4 h-4 text-white animate-pulse" 
-          strokeWidth={1.5}
-        />
-      </div>
+    <>
+      {/* Wingstop Green Sticky Top Bar with iOS Notch & Status Bar Protection */}
+      <div 
+        className="sticky top-0 z-50 w-full bg-[#00703a] border-b border-[#005228] pb-2 px-3 sm:px-4 shadow-md backdrop-blur-md"
+        style={{ paddingTop: "calc(env(safe-area-inset-top, 0px) + 14px)" }}
+      >
+        {/* Background Sparkle Accents */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+          <Sparkles 
+            className="absolute left-[2%] sm:left-[6%] top-1/2 -translate-y-1/2 w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-pulse" 
+            strokeWidth={1.5}
+          />
+          <Sparkles 
+            className="absolute right-[2%] sm:right-[6%] top-1/2 -translate-y-1/2 w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-pulse" 
+            strokeWidth={1.5}
+          />
+        </div>
 
-      {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center max-w-xl mx-auto">
-        {/* Top Row: Timer Message */}
-        <div className="flex items-center justify-center gap-3">
-            <div className="flex items-center justify-center gap-2 text-center">
-              <Clock 
-                className="w-3.5 h-3.5 text-[#ffffff] animate-pulse shrink-0" 
-                strokeWidth={2.5}
-              />
-              <p className="text-[#ffffff] text-[12px] font-bold tracking-tight text-center">
-                You have{" "}
-                <span className="text-[#ffffff] tabular-nums font-black">
-                  {formatTime(timeLeft)}
-                </span>{" "}
-                minutes left to unlock your Wingstop reward
-              </p>
+        {/* Content Stack */}
+        <div className="relative z-10 flex flex-col items-center justify-center max-w-xl mx-auto space-y-1">
+          {/* Headline with Live Timer */}
+          <div className="flex items-center justify-center gap-1.5 w-full text-center">
+            <Lock className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white shrink-0 -mt-0.5" strokeWidth={2.5} />
+            <p className="text-white text-[9.5px] xs:text-[10.5px] sm:text-[11.5px] font-bold tracking-tight leading-none flex items-center gap-1.5 flex-wrap justify-center">
+              <span>Your spot is reserved for:</span>
+              <span className="inline-flex items-center gap-1 bg-[#005228] border border-white/20 text-white px-1.5 py-0.5 rounded font-mono text-[9px] xs:text-[10px] sm:text-[11px] font-bold shadow-sm">
+                <Clock className="w-2.5 h-2.5 text-white animate-pulse" />
+                <span>{mounted ? formatTime(timeLeft) : "05:00"}</span>
+              </span>
+            </p>
+          </div>
+
+          {/* Subtext Trust Badges */}
+          <div className="flex items-center justify-center gap-1.5 text-white/90">
+            <span className="text-[7.5px] xs:text-[8px] sm:text-[8.5px] uppercase tracking-wider font-semibold">
+              OVER 1,400+ VERIFIED TODAY
+            </span>
+            <span className="text-white/40 text-[7.5px]">&bull;</span>
+            <div className="flex items-center gap-1 text-[7.5px] xs:text-[8px] sm:text-[8.5px] font-semibold text-white/95">
+              <ShieldCheck className="w-2.5 h-2.5 text-emerald-300" strokeWidth={2.5} />
+              <span className="uppercase tracking-wider">256-BIT SSL SECURED</span>
             </div>
+          </div>
         </div>
 
-        {/* Bottom Row: Subtext with decorative lines */}
-        <div className="flex items-center gap-2 mt-0.5">
-          <div className="h-[1px] w-4 bg-[#ffffff]"></div>
-          <p className="text-[#ffffff] text-[9px] uppercase tracking-[0.15em] font-bold">
-            Complete the steps before access expires
-          </p>
-          <div className="h-[1px] w-4 bg-[#ffffff]"></div>
+        {/* Shimmer Border Accent */}
+        <div className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/50 to-transparent w-full opacity-60 overflow-hidden">
+          <div className="absolute inset-0 bg-white/40 animate-shine"></div>
         </div>
       </div>
 
-      {/* Shimmering Bottom Border Accent */}
-      <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-transparent via-[#000001] to-transparent w-full opacity-50 overflow-hidden">
-        <div className="absolute inset-0 bg-white/20 animate-shine"></div>
-      </div>
-    </div>
+      {/* Floating Bottom Social Proof Toast */}
+      {mounted && currentNotif && (
+        <div
+          className={`fixed bottom-4 left-4 right-4 z-[9999] max-w-[340px] mx-auto flex items-center gap-2 rounded-full border border-gray-200/90 bg-white/98 backdrop-blur-md px-3.5 py-1.5 shadow-lg overflow-hidden transition-all duration-300 ease-in-out pointer-events-none ${
+            isVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-3 opacity-0"
+          }`}
+        >
+          {/* Wingstop Green Check Badge */}
+          <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#00703a] text-white">
+            <Check className="w-2.5 h-2.5" strokeWidth={3} />
+          </div>
+
+          {/* Toast Notification Text */}
+          <div className="text-[9.5px] sm:text-[10.5px] text-[#222222] truncate leading-tight">
+            <span className="font-bold">{currentNotif.name} </span>
+            <span className="text-[#555555]">{currentNotif.action}</span>
+          </div>
+        </div>
+      )}
+    </>
   );
-};
-
-export default AnnouncementBar;
+}
